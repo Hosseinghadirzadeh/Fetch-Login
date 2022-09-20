@@ -57,17 +57,21 @@
     </div>
     <div class="lock">
         <div class="personal">
-
+            <h1>You're now logged in as: </h1>
+            <p>phone number: </p>
+            <p>Email: </p>
+            <button onclick="_close()">Log Out</button>
         </div>
     </div>
 </body>
 <script>
+
     let _name = document.getElementById('username')
     let _pass = document.getElementById('Password')
     let myData;
     let _h3 = document.querySelectorAll('h3');
     let _p = document.querySelectorAll('.hint>div>p');
-
+    let person = document.querySelector('.personal>h1');
     fetch('https://jsonplaceholder.typicode.com/users').then(
         (response) => {
             response.json()
@@ -102,14 +106,35 @@
 
 
     function load() {
-        myData.forEach(element => {
-            if (element.username == _name.value && element.email == _pass.value) {
-                document.getElementsByClassName('login_box')[0].style.display='none';
-                document.getElementsByClassName('hint')[0].style.display='none';
-                document.getElementsByClassName('lock')[0].style.height = 100 + 'vh'
-                
+        if (_name.value != '' && _pass.value != '') {
+    
+
+          for (let i = 0; i < myData.length; i++) {
+                if (myData[i].username == _name.value && myData[i].email == _pass.value) {
+                    document.getElementsByClassName('login_box')[0].style.display = 'none';
+                    document.getElementsByClassName('hint')[0].style.display = 'none';
+                    document.getElementsByClassName('lock')[0].style.height = 100 + 'vh';
+                    document.getElementsByClassName('lock')[0].style.display = 'block';
+                    person.innerHTML += element.name;
+                    person.nextElementSibling.innerHTML += element.phone;
+                    person.nextElementSibling.nextElementSibling.innerHTML += element.email;
+                } else {
+                    alert('Username or password is wrong try to use the Hint bar');
+                    break;
+                }
             }
-        });
+        }
+        else
+            alert('Please Fill the inputs')
+
+    }
+    function _close() {
+        document.getElementsByClassName('login_box')[0].style.display = 'block';
+        document.getElementsByClassName('hint')[0].style.display = 'block';
+        document.getElementsByClassName('lock')[0].style.display = 'none';
+        document.getElementsByClassName('lock')[0].style.height = 0 + 'vh';
+        _name.value = null;
+        _pass.value = null
     }
 
 </script>
