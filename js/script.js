@@ -18,6 +18,7 @@ fetch('https://jsonplaceholder.typicode.com/users').then(
             })
     }
 )
+if (window.innerWidth <= 1000) {alert('Please use a bigger screen to see the hint bar')}
 
 
 
